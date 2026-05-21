@@ -9,10 +9,10 @@ const mockTheme: ThemeHighlightAdapter = {
 
 describe("theme-aware highlight helpers", () => {
   it("highlights json keys, values, and punctuation with Pi theme tokens", () => {
-    const rendered = highlightJsonLine(mockTheme, '{"name": "slopkick", "ok": true, "n": 1}');
+    const rendered = highlightJsonLine(mockTheme, '{"name": "pi-slopkick", "ok": true, "n": 1}');
 
     expect(rendered).toContain('<syntaxVariable>"name"</syntaxVariable>');
-    expect(rendered).toContain('<syntaxString>"slopkick"</syntaxString>');
+    expect(rendered).toContain('<syntaxString>"pi-slopkick"</syntaxString>');
     expect(rendered).toContain('<syntaxNumber>true</syntaxNumber>');
     expect(rendered).toContain('<syntaxNumber>1</syntaxNumber>');
     expect(rendered).toContain('<syntaxPunctuation>{</syntaxPunctuation>');

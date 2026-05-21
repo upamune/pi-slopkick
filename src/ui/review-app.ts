@@ -1721,7 +1721,7 @@ class ReviewApp {
       truncateToWidth(this.theme.fg("dim", "navigator: ↑↓ files, Ctrl+d/u half-page, r related filter • diff: ↑↓ lines, Ctrl+d/u half-page, / shortcuts, o open in $EDITOR, f fix line, d/c discuss line, e edit, x delete, l file, a all, n/p hunks • comments: h hide/show, ↑↓ comments, Ctrl+d/u half-page, e edit, d delete • editor: Tab toggle intent, Enter save, Shift+Enter newline • ? help • w wrap • u toggle unchanged"), frameInnerWidth, "…", false),
     ];
 
-    return renderOuterFrame(this.lastWidth, totalHeight, this.theme, "slopkick", [...headerLines, ...body, ...footer], frameColor);
+    return renderOuterFrame(this.lastWidth, totalHeight, this.theme, "pi-slopkick", [...headerLines, ...body, ...footer], frameColor);
   }
 }
 

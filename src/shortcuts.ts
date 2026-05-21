@@ -102,7 +102,7 @@ export function parseShortcutConfig(config: unknown): { shortcuts: CommentShortc
   const parsed = (config ?? {}) as ShortcutConfigFile;
 
   if (parsed.version != null && parsed.version !== 1) {
-    warnings.push(`Unsupported slopkick shortcut config version: ${String(parsed.version)}. Expected version 1.`);
+    warnings.push(`Unsupported pi-slopkick shortcut config version: ${String(parsed.version)}. Expected version 1.`);
   }
 
   const disabledBuiltinIds = new Set<string>();

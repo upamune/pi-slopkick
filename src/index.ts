@@ -23,7 +23,7 @@ export default function slopReviewExtension(pi: ExtensionAPI) {
       }
 
       if (shortcutConfig.warnings.length > 0) {
-        ctx.ui.notify(`Loaded slopkick shortcuts with ${shortcutConfig.warnings.length} warning${shortcutConfig.warnings.length === 1 ? "" : "s"}. Using valid entries only.`, "warning");
+        ctx.ui.notify(`Loaded pi-slopkick shortcuts with ${shortcutConfig.warnings.length} warning${shortcutConfig.warnings.length === 1 ? "" : "s"}. Using valid entries only.`, "warning");
       }
 
       const result = await runReviewApp(ctx, {

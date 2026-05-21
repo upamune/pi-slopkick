@@ -1,10 +1,10 @@
-# slopkick
+# pi-slopkick
 
-`slopkick` is a Pi coding-agent extension that provides a terminal-native review and annotation UI for code changes. It lets you stop after an agent turn, inspect the diff inside Pi, add precise line/file/whole-change feedback, and insert a clean follow-up prompt back into Pi’s editor.
+`pi-slopkick` is a Pi coding-agent extension that provides a terminal-native review and annotation UI for code changes. It lets you stop after an agent turn, inspect the diff inside Pi, add precise line/file/whole-change feedback, and insert a clean follow-up prompt back into Pi’s editor.
 
-It is a fork of Rob Zolkos’ [`robzolkos/pi-slopchop`](https://github.com/robzolkos/pi-slopchop), inspired by Mario Zechner’s [`pi-diff-review`](https://github.com/badlogic/pi-diff-review). This fork keeps the original MIT license notice and adds slopkick-specific updates under the same MIT license.
+It is a fork of Rob Zolkos’ [`robzolkos/pi-slopchop`](https://github.com/robzolkos/pi-slopchop), inspired by Mario Zechner’s [`pi-diff-review`](https://github.com/badlogic/pi-diff-review). This fork keeps the original MIT license notice and adds pi-slopkick-specific updates under the same MIT license.
 
-slopkick uses [`diffs.com`](https://diffs.com/) via `@pierre/diffs` for rich diff parsing/rendering workflows, while keeping review, comments, navigation, and prompt handoff in the terminal.
+pi-slopkick uses [`diffs.com`](https://diffs.com/) via `@pierre/diffs` for rich diff parsing/rendering workflows, while keeping review, comments, navigation, and prompt handoff in the terminal.
 
 ## Summary
 
@@ -35,7 +35,7 @@ Inside the review UI you can:
 ### Install
 
 ```bash
-pi install npm:slopkick
+pi install npm:pi-slopkick
 ```
 
 Then restart Pi or run `/reload`.
@@ -62,7 +62,7 @@ ctrl+alt+s
    - `last commit` — review the most recent commit against its parent
    - `all files` — review files changed on the current branch compared with the default branch; if there are no changed scopes, falls back to current file contents
 
-   By default, slopkick opens the first scope that makes sense for the repo in this order:
+   By default, pi-slopkick opens the first scope that makes sense for the repo in this order:
    - `git diff` if there are uncommitted changes
    - otherwise `all files` if the current branch differs from the default branch
    - otherwise `last commit` if there is a reviewable last commit
@@ -89,7 +89,7 @@ That creates a templated annotation instantly. If you want to refine it afterwar
 
 ## Diff rendering and review workflow
 
-slopkick depends on [`@pierre/diffs`](https://www.npmjs.com/package/@pierre/diffs), the npm package for [`diffs.com`](https://diffs.com/), to power rich diff handling in the review workflow. Pi supplies the coding-agent context and terminal UI; slopkick adds a focused review layer for walking changes, marking up feedback, and converting that feedback into a prompt.
+pi-slopkick depends on [`@pierre/diffs`](https://www.npmjs.com/package/@pierre/diffs), the npm package for [`diffs.com`](https://diffs.com/), to power rich diff handling in the review workflow. Pi supplies the coding-agent context and terminal UI; pi-slopkick adds a focused review layer for walking changes, marking up feedback, and converting that feedback into a prompt.
 
 The UI is designed for terminal review instead of browser-based code review:
 
@@ -100,7 +100,7 @@ The UI is designed for terminal review instead of browser-based code review:
 
 ## Annotation model
 
-slopkick treats feedback as one of three scopes:
+pi-slopkick treats feedback as one of three scopes:
 
 ### Line comments
 
@@ -132,7 +132,7 @@ Examples:
 
 ## FIX vs DISCUSS
 
-This distinction is central to how slopkick works.
+This distinction is central to how pi-slopkick works.
 
 ### FIX
 
@@ -156,7 +156,7 @@ Examples:
 - explain this change to me
 - is this approach intentional?
 
-When slopkick generates the prompt, it uses different wording depending on whether your review is:
+When pi-slopkick generates the prompt, it uses different wording depending on whether your review is:
 
 - `DISCUSS` only
 - `FIX` only
@@ -192,7 +192,7 @@ That keeps pure discussion prompts strict, and avoids unnecessary instructions w
 - `↑↓` or `j/k` — move between selectable added/deleted lines
 - `Ctrl+d` / `Ctrl+u` — move down / up by half a pane
 - `n / p` — next / previous hunk
-- `o` — open the selected line in `$EDITOR`, then return to slopkick when the editor exits
+- `o` — open the selected line in `$EDITOR`, then return to pi-slopkick when the editor exits
 - `f` — line comment, default `FIX`
 - `d` or `c` — line comment, default `DISCUSS`
 - `e` — edit the existing line comment on the selected line
@@ -247,6 +247,8 @@ Optional user-level config file:
 
 - `~/.pi/agent/extensions/slopkick.json`
 
+If you are migrating from `pi-slopchop`, rename `~/.pi/agent/extensions/slopchop.json` to `~/.pi/agent/extensions/slopkick.json`.
+
 Example:
 
 ```json
@@ -285,7 +287,7 @@ Each shortcut has:
 
 ## Prompt generation
 
-When you submit, slopkick builds a prompt that matches the kind of review you created.
+When you submit, pi-slopkick builds a prompt that matches the kind of review you created.
 
 It groups feedback naturally into sections like:
 
@@ -297,7 +299,7 @@ and uses stricter instructions when `DISCUSS` items are present, so the model is
 
 ## What it is good at
 
-slopkick is especially good when you want to:
+pi-slopkick is especially good when you want to:
 
 - pause after an agent turn and inspect the change carefully
 - ask for explanation without losing the exact line you are looking at
@@ -307,6 +309,6 @@ slopkick is especially good when you want to:
 
 ## Attribution and license
 
-slopkick is forked from [`robzolkos/pi-slopchop`](https://github.com/robzolkos/pi-slopchop), originally copyright 2026 Rob Zolkos.
+pi-slopkick is forked from [`robzolkos/pi-slopchop`](https://github.com/robzolkos/pi-slopchop), originally copyright 2026 Rob Zolkos.
 
-This repository is distributed under the MIT License. The original copyright notice is preserved in [`LICENSE`](./LICENSE), with an additional copyright notice for Yu SERIZAWA for slopkick modifications.
+This repository is distributed under the MIT License. The original copyright notice is preserved in [`LICENSE`](./LICENSE), with an additional copyright notice for Yu SERIZAWA for pi-slopkick modifications.

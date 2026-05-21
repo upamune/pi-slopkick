@@ -15,7 +15,7 @@ function resolveThemeModuleUrl(): string {
     current = parent;
   }
 
-  throw new Error("Could not resolve Pi theme module for slopkick rendering.");
+  throw new Error("Could not resolve Pi theme module for pi-slopkick rendering.");
 }
 
 const { getLanguageFromPath, highlightCode } = await import(resolveThemeModuleUrl()) as {
@@ -124,7 +124,7 @@ function diffWordTokens(oldContent: string, newContent: string): WordDiffPart[] 
 }
 
 /**
- * Adapted from Pi's internal diff renderer so slopkick follows Pi's intra-line
+ * Adapted from Pi's internal diff renderer so pi-slopkick follows Pi's intra-line
  * diff highlighting behavior while still controlling its own gutters and
  * comment markers.
  */

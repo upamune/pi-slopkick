@@ -1,5 +1,5 @@
 {
-  "name": "slopkick",
+  "name": "pi-slopkick",
   "version": "0.0.5",
   "type": "module",
   "description": "Pi coding-agent extension for terminal-native review, annotation, and rich diff workflows.",
@@ -13,11 +13,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/upamune/slopkick.git"
+    "url": "git+https://github.com/upamune/pi-slopkick.git"
   },
-  "homepage": "https://github.com/upamune/slopkick#readme",
+  "homepage": "https://github.com/upamune/pi-slopkick#readme",
   "bugs": {
-    "url": "https://github.com/upamune/slopkick/issues"
+    "url": "https://github.com/upamune/pi-slopkick/issues"
   },
   "files": [
     "src/diff.ts",
