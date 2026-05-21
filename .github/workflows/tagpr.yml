@@ -23,4 +23,4 @@ jobs:
       - name: Run tagpr
         uses: Songmu/tagpr@555e72cee68c09d43dc2337dc9ba890955b630da # v1.19.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TAGPR_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
