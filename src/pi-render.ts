@@ -36,11 +36,35 @@ function replaceTabs(text: string): string {
   return text.replace(/\t/g, "   ");
 }
 
-function tokenizeWords(text: string): string[] {
-  return text.match(/\s+|[^\s]+/gu) ?? [];
+interface WordToken {
+  value: string;
+  key: string;
 }
 
-function diffWordTokens(oldContent: string, newContent: string): Array<{ value: string; added?: boolean; removed?: boolean }> {
+interface WordDiffPart {
+  value: string;
+  added?: boolean;
+  removed?: boolean;
+}
+
+function tokenizeWords(text: string): WordToken[] {
+  return (text.match(/\s+|[\p{L}\p{N}_]+|[^\s\p{L}\p{N}_]+/gu) ?? []).map((value) => ({
+    value,
+    key: /^\s+$/u.test(value) ? " " : value,
+  }));
+}
+
+function pushWordDiffPart(parts: WordDiffPart[], part: WordDiffPart): void {
+  if (part.value.length === 0) return;
+  const previous = parts[parts.length - 1];
+  if (previous && Boolean(previous.added) === Boolean(part.added) && Boolean(previous.removed) === Boolean(part.removed)) {
+    previous.value += part.value;
+    return;
+  }
+  parts.push(part);
+}
+
+function diffWordTokens(oldContent: string, newContent: string): WordDiffPart[] {
   const oldTokens = tokenizeWords(oldContent);
   const newTokens = tokenizeWords(newContent);
   const table = Array.from({ length: oldTokens.length + 1 }, () => new Uint16Array(newTokens.length + 1));
@@ -49,41 +73,41 @@ function diffWordTokens(oldContent: string, newContent: string): Array<{ value: 
     const current = table[oldIndex]!;
     const next = table[oldIndex + 1]!;
     for (let newIndex = newTokens.length - 1; newIndex >= 0; newIndex -= 1) {
-      current[newIndex] = oldTokens[oldIndex] === newTokens[newIndex]
+      current[newIndex] = oldTokens[oldIndex]!.key === newTokens[newIndex]!.key
         ? next[newIndex + 1]! + 1
         : Math.max(next[newIndex]!, current[newIndex + 1]!);
     }
   }
 
-  const parts: Array<{ value: string; added?: boolean; removed?: boolean }> = [];
+  const parts: WordDiffPart[] = [];
   let oldIndex = 0;
   let newIndex = 0;
 
   while (oldIndex < oldTokens.length && newIndex < newTokens.length) {
-    if (oldTokens[oldIndex] === newTokens[newIndex]) {
-      parts.push({ value: oldTokens[oldIndex]! });
+    if (oldTokens[oldIndex]!.key === newTokens[newIndex]!.key) {
+      pushWordDiffPart(parts, { value: newTokens[newIndex]!.value });
       oldIndex += 1;
       newIndex += 1;
       continue;
     }
 
     if (table[oldIndex + 1]![newIndex]! >= table[oldIndex]![newIndex + 1]!) {
-      parts.push({ value: oldTokens[oldIndex]!, removed: true });
+      pushWordDiffPart(parts, { value: oldTokens[oldIndex]!.value, removed: true });
       oldIndex += 1;
       continue;
     }
 
-    parts.push({ value: newTokens[newIndex]!, added: true });
+    pushWordDiffPart(parts, { value: newTokens[newIndex]!.value, added: true });
     newIndex += 1;
   }
 
   while (oldIndex < oldTokens.length) {
-    parts.push({ value: oldTokens[oldIndex]!, removed: true });
+    pushWordDiffPart(parts, { value: oldTokens[oldIndex]!.value, removed: true });
     oldIndex += 1;
   }
 
   while (newIndex < newTokens.length) {
-    parts.push({ value: newTokens[newIndex]!, added: true });
+    pushWordDiffPart(parts, { value: newTokens[newIndex]!.value, added: true });
     newIndex += 1;
   }
 
