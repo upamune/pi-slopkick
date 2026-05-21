@@ -1,6 +1,7 @@
 [tagpr]
 vPrefix = true
 releaseBranch = "main"
+versionFile = "package.json"
 packageManager = "npm"
 
 [github]
