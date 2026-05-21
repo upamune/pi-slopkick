@@ -1,17 +1,20 @@
 {
-  "name": "pi-slopchop",
+  "name": "slopkick",
   "version": "0.0.5",
   "type": "module",
-  "description": "Terminal-native code review and annotation workflow for the Pi coding agent.",
-  "author": "Rob Zolkos <rob@zolkos.com>",
+  "description": "Pi coding-agent extension for terminal-native review, annotation, and rich diff workflows.",
+  "author": "Yu SERIZAWA <info@serizawa.me>",
+  "contributors": [
+    "Rob Zolkos <rob@zolkos.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robzolkos/pi-slopchop.git"
+    "url": "git+https://github.com/upamune/slopkick.git"
   },
-  "homepage": "https://github.com/robzolkos/pi-slopchop#readme",
+  "homepage": "https://github.com/upamune/slopkick#readme",
   "bugs": {
-    "url": "https://github.com/robzolkos/pi-slopchop/issues"
+    "url": "https://github.com/upamune/slopkick/issues"
   },
   "files": [
     "src/diff.ts",

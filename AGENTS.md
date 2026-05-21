@@ -2,9 +2,9 @@
 
 ## Project overview
 
-`pi-slopchop` is a Pi coding-agent extension that adds the `/slopchop` terminal review UI. It lets users review diffs, annotate lines/files/whole changes, and insert a follow-up prompt back into Pi.
+`slopkick` is a Pi coding-agent extension that adds the `/slopkick` terminal review UI. It lets users review diffs, annotate lines/files/whole changes, and insert a follow-up prompt back into Pi.
 
-The package is published to npm as `pi-slopchop` and is loaded by Pi from `./src/index.ts`.
+The package is published to npm as `slopkick` and is loaded by Pi from `./src/index.ts`. The legacy `/slopchop` command is kept as a compatibility alias for users of the upstream fork.
 
 ## Git guidance
 

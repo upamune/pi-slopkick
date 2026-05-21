@@ -9,7 +9,7 @@ export default function slopReviewExtension(pi: ExtensionAPI) {
 
   async function openReview(ctx: ExtensionContext): Promise<void> {
     if (activeReview) {
-      ctx.ui.notify("A /slopchop review session is already open.", "warning");
+      ctx.ui.notify("A /slopkick review session is already open.", "warning");
       return;
     }
 
@@ -23,7 +23,7 @@ export default function slopReviewExtension(pi: ExtensionAPI) {
       }
 
       if (shortcutConfig.warnings.length > 0) {
-        ctx.ui.notify(`Loaded slopchop shortcuts with ${shortcutConfig.warnings.length} warning${shortcutConfig.warnings.length === 1 ? "" : "s"}. Using valid entries only.`, "warning");
+        ctx.ui.notify(`Loaded slopkick shortcuts with ${shortcutConfig.warnings.length} warning${shortcutConfig.warnings.length === 1 ? "" : "s"}. Using valid entries only.`, "warning");
       }
 
       const result = await runReviewApp(ctx, {
@@ -43,21 +43,29 @@ export default function slopReviewExtension(pi: ExtensionAPI) {
       ctx.ui.notify("Inserted review feedback into the editor.", "info");
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      ctx.ui.notify(`Could not open /slopchop: ${message}`, "error");
+      ctx.ui.notify(`Could not open /slopkick: ${message}`, "error");
     } finally {
       activeReview = false;
     }
   }
 
-  pi.registerCommand("slopchop", {
+  pi.registerCommand("slopkick", {
     description: "Review and annotate code changes",
     handler: async (_args, ctx) => {
       await openReview(ctx);
     },
   });
 
+  // Compatibility alias for existing Pi users of robzolkos/pi-slopchop.
+  pi.registerCommand("slopchop", {
+    description: "Review and annotate code changes (legacy alias for /slopkick)",
+    handler: async (_args, ctx) => {
+      await openReview(ctx);
+    },
+  });
+
   pi.registerShortcut("ctrl+alt+s", {
-    description: "Open /slopchop",
+    description: "Open /slopkick",
     handler: async (ctx) => {
       await openReview(ctx);
     },

@@ -38,7 +38,8 @@ export interface LoadedCommentShortcuts {
   path: string;
 }
 
-const CONFIG_FILE_NAME = "slopchop.json";
+const CONFIG_FILE_NAME = "slopkick.json";
+const LEGACY_CONFIG_FILE_NAME = "slopchop.json";
 
 export const BUILTIN_COMMENT_SHORTCUTS: CommentShortcut[] = [
   { id: "explain-added", key: "e", label: "explain", intent: "discuss", side: "added", text: "Explain what this code is doing." },
@@ -102,7 +103,7 @@ export function parseShortcutConfig(config: unknown): { shortcuts: CommentShortc
   const parsed = (config ?? {}) as ShortcutConfigFile;
 
   if (parsed.version != null && parsed.version !== 1) {
-    warnings.push(`Unsupported slopchop shortcut config version: ${String(parsed.version)}. Expected version 1.`);
+    warnings.push(`Unsupported slopkick shortcut config version: ${String(parsed.version)}. Expected version 1.`);
   }
 
   const disabledBuiltinIds = new Set<string>();
@@ -154,10 +155,16 @@ export function getShortcutConfigPath(): string {
   return join(getAgentDir(), "extensions", CONFIG_FILE_NAME);
 }
 
+function getLegacyShortcutConfigPath(): string {
+  return join(getAgentDir(), "extensions", LEGACY_CONFIG_FILE_NAME);
+}
+
 export function loadCommentShortcuts(): LoadedCommentShortcuts {
-  const path = getShortcutConfigPath();
+  const primaryPath = getShortcutConfigPath();
+  const legacyPath = getLegacyShortcutConfigPath();
+  const path = existsSync(primaryPath) ? primaryPath : legacyPath;
   if (!existsSync(path)) {
-    return { shortcuts: BUILTIN_COMMENT_SHORTCUTS, warnings: [], path };
+    return { shortcuts: BUILTIN_COMMENT_SHORTCUTS, warnings: [], path: primaryPath };
   }
 
   try {
