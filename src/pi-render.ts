@@ -36,6 +36,8 @@ function replaceTabs(text: string): string {
   return text.replace(/\t/g, "   ");
 }
 
+const WORD_DIFF_TOKEN_MATRIX_LIMIT = 20_000;
+
 interface WordToken {
   value: string;
   key: string;
@@ -67,6 +69,13 @@ function pushWordDiffPart(parts: WordDiffPart[], part: WordDiffPart): void {
 function diffWordTokens(oldContent: string, newContent: string): WordDiffPart[] {
   const oldTokens = tokenizeWords(oldContent);
   const newTokens = tokenizeWords(newContent);
+  if ((oldTokens.length + 1) * (newTokens.length + 1) > WORD_DIFF_TOKEN_MATRIX_LIMIT) {
+    return [
+      { value: oldContent, removed: true },
+      { value: newContent, added: true },
+    ];
+  }
+
   const table = Array.from({ length: oldTokens.length + 1 }, () => new Uint16Array(newTokens.length + 1));
 
   for (let oldIndex = oldTokens.length - 1; oldIndex >= 0; oldIndex -= 1) {

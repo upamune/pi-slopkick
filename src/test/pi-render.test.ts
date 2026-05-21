@@ -20,4 +20,14 @@ describe("renderPiIntraLineDiff", () => {
       addedLine: "function <bar>()",
     });
   });
+
+  it("falls back to whole-line highlighting for very large token matrices", () => {
+    const oldLine = Array.from({ length: 150 }, (_, index) => `a${index}`).join(".");
+    const newLine = Array.from({ length: 150 }, (_, index) => `b${index}`).join(".");
+
+    expect(renderPiIntraLineDiff(oldLine, newLine, mark)).toEqual({
+      removedLine: `<${oldLine}>`,
+      addedLine: `<${newLine}>`,
+    });
+  });
 });
